@@ -1,0 +1,58 @@
+{
+    "arbitrum": {
+        "gnosis_safe": "0x1057a4119aedf92e3d83b6fc53e0e1fddbabf543",
+        "chain_name": "arbitrum",
+        "chain_id": "421611",
+        "chain_url": "https://rinkeby.arbitrum.io/rpc",
+        "client_manager": "0x9a45e7a38d1ad5fb81229d51da75b12d2aa15860",
+        "packet": "0xfe37ce17b31deeadb44bbbaa2b28733001e9301e",
+        "transfer": "0xc1ede5c0ce3087cc27a67a8766df1efddbd099ea",
+        "multiCall": "0x1af2fdb9f80c1a3034d5617182773126ad9628f1",
+        "proxy": "0xdacd5a55b06edc749f268b7caaa1ac9399fd65e9",
+        "usdt": "0xf479ddf1322a2a28c57ab4377bbaebf30a59bba2",
+        "tele": "0x5bf858f612492ae3269f2fbca58afc7a6f8ebfa7",
+        "eth": "0x0000000000000000000000000000000000000000",
+        "explorer": "https://rinkeby-explorer.arbitrum.io"
+    },
+    "bsctest": {
+        "gnosis_safe": "0x2cae68d7c0b49e5b1fbe87faef9afeb36f13a410",
+        "chain_name": "bsctest",
+        "chain_id": "97",
+        "chain_url": "https://data-seed-prebsc-2-s2.binance.org:8545",
+        "client_manager": "0x5a71330c70134ee00fd39acef80cd1f0430d9c80",
+        "packet": "0x420cada1fc6c385a8da592d9e392407e8e7db830",
+        "transfer": "0x1fd35b5a15fcddd1d7dd4be70b011a55756caa90",
+        "multiCall": "0x0328787d1b6bdc5a215df7ddd2e339c49e827289",
+        "proxy": "0x7241dd211311e6754e8063ce400e4b0a13334c28",
+        "eth": "0xd66c6b4f0be8ce5b39d52e0fd1344c389929b378",
+        "usdt": "0x44de7218b9f7a205084466d9ad7f438ec30dc192",
+        "tele": "0x0e2ab05ce17feff31d7d4dd7a65d59fbc2d8abbf",
+        "explorer": "https://testnet.bscscan.com"
+    },
+    "teleport": {
+        "transfer": "0x0000000000000000000000000000000030000001",
+        "packet": "0x0000000000000000000000000000000020000001",
+        "usdt": "0x80aae951ac9bc48f42b950fe33385e8900149912",
+        "eth": "0xb2b75c5c11b03be8729d5c2761f306e86d492b46",
+        "chain_name": "teleport",
+        "explorer": "https://blockscout.qa.davionlabs.com",
+        "tele": "0x0000000000000000000000000000000000000000",
+        "chain_id": "7001",
+        "chain_url": "https://teleport-localvalidator.qa.davionlabs.com/"
+    },
+    "rinkeby": {
+        "gnosis_safe": "0xe9ef513926cb4a3a9aff4cf88b63b687c8b4dfc7",
+        "chain_name": "rinkeby",
+        "chain_id": "4",
+        "chain_url": "https://rinkeby.infura.io/v3/023f2af0f670457d9c4ea9cb524f0810",
+        "client_manager": "0x76c86bf497ead256329fb2e898d4c16b5daa5731",
+        "packet": "0xea0f10eea3ab1ea7a9628e5d21346744a05f2bae",
+        "transfer": "0x01b1ed143cf7c80f1658c10baab3faf900d64f98",
+        "multiCall": "0x3cd04374b00e366a126058f9701ccdcdb31a0ea2",
+        "proxy": "0x4bf6591dd82f1f8a4769e9565380d96ec6114b62",
+        "eth": "0x0000000000000000000000000000000000000000",
+        "usdt": "0x78c66373b6b5255861992854aaa4ef4f3e10fd5c",
+        "tele": "0x2b2454ad0c2142bd02ff38d8728c022a4a90feb7",
+        "explorer": "https://rinkeby.etherscan.io"
+    }
+}
