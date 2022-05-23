@@ -1,4 +1,4 @@
-,tokenName,direction,status,amount,sequence,consumingTimes,send_tx_hash,receive_tx_hash
+,tokenName,direction,status,amount,sequence,duration,send_tx_hash,receive_tx_hash
 0,usdt,arbitrum -> bsctest,2,8329626988999999488,974,3404,0x8b28d3833bc2467cfaf752e7f489d9ca14ee2e60bee08cb89664450118c55bb8,0x44b94c97d90d0c1752594b7e068297e75ac64f2c78cc6f912ec21306923d366d
 1,usdt,bsctest -> ,1,,4121,0,0xfdf413169251fb3bf8f783217e99ed4d7d99a18cae4bd40da0774141e1e99745,
 2,usdt,arbitrum -> rinkeby,2,8371215348999999488,973,240,0xb4d1ae5d2954ed8d4903592cbc77f248bb067d7adef642a8401e20fda9a494ac,0x23102a70b90e4933290ab4c04bb54168182c011a6ff1bece517af7b045b40ac3
