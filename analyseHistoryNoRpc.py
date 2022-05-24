@@ -78,12 +78,15 @@ class AH:
         return timestamp
 
     def getConsumingTimes(self, dataD):
-        # 查询源链区块时间
-        srcTimestamp = self.getBlockTimestamp(dataD["src_chain"], dataD["src_height"])
-        # 查询目标链区块时间
-        destTimestamp = self.getBlockTimestamp(dataD["dest_chain"], dataD["dest_height"])
 
-        return destTimestamp - srcTimestamp
+        # 查询源链区块时间
+        srcTimestamp = dataD['send_tx_time']
+        send_tx_time = int(time.mktime(time.strptime(srcTimestamp, "%Y-%m-%dT%H:%M:%SZ")))
+        # 查询目标链区块时间
+        destTimestamp = dataD['receive_tx_time']
+        receive_tx_time = int(time.mktime(time.strptime(destTimestamp, "%Y-%m-%dT%H:%M:%SZ")))
+
+        return receive_tx_time - send_tx_time
 
     def analyseData(self, ds: list):
         failS = []
@@ -180,9 +183,9 @@ if __name__ == "__main__":
     
     lS = ah.analyseData(dataS)
 
-    # # 删除大于20分钟的数据
-    # for i in range(len(lS)):
-    #     lS[i] = [k for k in lS[i] if k <= 500]
+    # 删除大于20分钟的数据
+    for i in range(len(lS)):
+        lS[i] = [k for k in lS[i] if k <= 900]
 
     # fig, axs = plt.subplots(3, 4, sharex=True, sharey=True)
     fig, axs = plt.subplots(3, 4, sharex=True)
