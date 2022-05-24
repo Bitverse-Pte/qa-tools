@@ -12,7 +12,7 @@ class AH:
         self.env = env
 
 
-    def getData(self, senders: list, pageSize: int) -> list:
+    def getData(self, senders: list, pageNo: int, pageSize: int) -> list:
         envDict = {
             "q": "https://bridge.qa.davionlabs.com",
             "t": "https://bridge.testnet.teleport.network",
@@ -21,7 +21,7 @@ class AH:
         # 資料
         my_data = {
             "senders": senders,
-            "pagination":{"current_page":1,"page_size":pageSize}
+            "pagination":{"current_page":pageNo,"page_size":pageSize}
         }
         headers = {'content-type' : 'application/json'}
         url = f"{envDict[self.env]}/bridge/packet/history"
@@ -69,13 +69,14 @@ if __name__ == "__main__":
     parser.description='查询交易历史，并绘制耗时点位图'
     parser.add_argument("-s", "--senders", help="查询的钱包地址，支持多个", dest="s", type=str, default="")
     parser.add_argument("-e", "--env", help="查询的环境:q(qanet),t(testnet), 默认值为: qanet", dest="e", type=str, default="q")
+    parser.add_argument("-pn", "--pageNo", help="查询数据的页码, 默认值为: 1", dest="pn", type=int, default=1)
     parser.add_argument("-ps", "--pageSize", help="查询数据的条数, 默认值为: 1000", dest="ps", type=int, default=1000)
     args = parser.parse_args()
 
     senders = args.s.split(",")
 
     ah = AH(args.e)
-    dataS = ah.getData(senders, args.ps)
+    dataS = ah.getData(senders, args.pn, args.ps)
 
     TELE = []
     USDT = []
@@ -90,7 +91,7 @@ if __name__ == "__main__":
         sequence = data['sequence']
         duration = ah.getConsumingTimes(data)
 
-        res = [tokenName, direction, status, amount, sequence, duration, send_tx_hash, receive_tx_hash]
+        res = [tokenName, direction, status, duration, amount, sequence, send_tx_hash, receive_tx_hash]
         if res[0] == "usdt":
             USDT.append(res)
         elif res[0] == "tele":
@@ -101,5 +102,5 @@ if __name__ == "__main__":
     [result.append(t) for t in TELE]
 
     df = pds.DataFrame(result)
-    df.columns = ["tokenName", "direction", "status", "amount", "sequence", "duration", "send_tx_hash", "receive_tx_hash"]
+    df.columns = ["tokenName", "direction", "status", "duration", "amount", "sequence", "send_tx_hash", "receive_tx_hash"]
     df.to_csv('result.xlsx')
