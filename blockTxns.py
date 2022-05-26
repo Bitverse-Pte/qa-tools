@@ -12,7 +12,8 @@ import argparse
 def blockTxns(bs: int, be: int, gap: int = 100, xStep: int = 10):
 
     # 链接 rpc
-    teleportClient = Web3(Web3.HTTPProvider('https://teleport-localvalidator.qa.davionlabs.com/'))
+    # teleportClient = Web3(Web3.HTTPProvider('https://teleport-localvalidator.qa.davionlabs.com/'))
+    teleportClient = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/a07ee340688643dd98ed571bfc1672fb'))
     teleportClient.middleware_onion.inject(geth_poa_middleware, layer=0)
     # block-txns 的二维数组
     data = [[],[],[]]
