@@ -9,11 +9,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 
-def blockTxns(bs: int, be: int, gap: int = 100, xStep: int = 10,yStep: int = 60):
+def blockTxns(bs: int, be: int, gap: int = 100, xStep: int = 10,yStep: int = 60, rpc: str = "q"):
 
     # 链接 rpc
-    # teleportClient = Web3(Web3.HTTPProvider('https://teleport-localvalidator.qa.davionlabs.com/'))
-    teleportClient = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/a07ee340688643dd98ed571bfc1672fb'))
+    teleportClient = Web3(Web3.HTTPProvider('https://teleport-localvalidator.qa.davionlabs.com/'))
+    if rpc == 'e':
+        teleportClient = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/a07ee340688643dd98ed571bfc1672fb'))
+    if rpc == 't':
+        teleportClient = Web3(Web3.HTTPProvider('https://evm-rpc.testnet.teleport.network'))
+
     teleportClient.middleware_onion.inject(geth_poa_middleware, layer=0)
     # block-txns 的二维数组
     data = [[],[],[],[]]
@@ -62,7 +66,9 @@ if __name__ == "__main__":
     parser.add_argument("-g", "--gap", help="区块间隔,用于自动获取起始区块", dest="g", type=int, default=100)
     parser.add_argument("-xs", "--xStep", help="x轴间隔（区块）", dest="xs", type=int, default=10)
     parser.add_argument("-ys", "--yStep", help="y轴间隔（时间秒）", dest="ys", type=int, default=60)
+    parser.add_argument("-e", "--rpc", help="查询的环境:q(qanet),t(testnet),e(Ethereum主网) 默认值为: qanet", dest="e", type=str,
+                        default="q")
     args = parser.parse_args()
 
-    blockTxns(args.bs,args.be,args.g,args.xs,args.ys)
+    blockTxns(args.bs,args.be,args.g,args.xs,args.ys,args.e)
 
