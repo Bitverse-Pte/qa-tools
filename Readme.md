@@ -1,5 +1,5 @@
 ## commands
-### 遍历区块信息，绘制交易数的折线图 e网路 默人qa
+### 遍历区块信息，绘制交易数的折线图 e网络 默认qa
 - `python blockTxns.py -bs 1000552 -be 1000581 -g 100 -xs 30 -e e`
 - `python blockTxnsTime.py -bs 1000552 -be 1000581 -g 100 -xs 30`
 - `python blockTime.py -bs 1000552 -be 1000581 -g 100 -xs 30 -ys 120 -e e`
