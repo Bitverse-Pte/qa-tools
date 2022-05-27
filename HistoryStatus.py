@@ -1,16 +1,38 @@
 
-import time
 import json
 import requests
 import argparse
 from requests.exceptions import HTTPError
 import pandas as pds
+from datetime import datetime,timezone,timedelta
 
 
 class AH:
     def __init__(self, env: str):
         self.env = env
 
+    def getDetail(self, senders: str, txn_hash: str) -> int:
+        envDict = {
+            "q": "https://bridge.qa.davionlabs.com",
+            "t": "https://bridge.testnet.teleport.network",
+        }
+        # 資料
+        my_data = {
+            "senders": senders,
+            "send_tx_hash": txn_hash
+        }
+        headers = {'content-type' : 'application/json'}
+        url = f"{envDict[self.env]}/bridge/packet/packets"
+        try:
+            response = requests.post(url, headers=headers, json = my_data)
+            # If the response was successful, no Exception will be raised
+            response.raise_for_status()
+        except HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')  # Python 3.6
+        except Exception as err:
+            print(f'Other error occurred: {err}')  # Python 3.6
+        
+        return response.json()["data"]["data"][0]["Status"]
 
     def getData(self, senders: list, pageNo: int, pageSize: int) -> list:
         envDict = {
@@ -42,11 +64,13 @@ class AH:
         if dataD['send_tx_time'] == "0001-01-01T00:00:00Z" or dataD['receive_tx_time'] == "0001-01-01T00:00:00Z":
             return 0
         # 查询源链区块时间
-        srcTimestamp = dataD['send_tx_time']
-        send_tx_time = int(time.mktime(time.strptime(srcTimestamp, "%Y-%m-%dT%H:%M:%SZ")))
+        # srcTimestamp = dataD['send_tx_time']
+        # send_tx_time = int(time.mktime(time.strptime(srcTimestamp, "%Y-%m-%dT%H:%M:%SZ")))
+        send_tx_time = int(datetime.strptime(dataD['send_tx_time'],'%Y-%m-%dT%H:%M:%SZ').timestamp())
+        
         # 查询目标链区块时间
-        destTimestamp = dataD['receive_tx_time']
-        receive_tx_time = int(time.mktime(time.strptime(destTimestamp, "%Y-%m-%dT%H:%M:%SZ")))
+        receive_tx_time = int(datetime.strptime(dataD['receive_tx_time'],'%Y-%m-%dT%H:%M:%SZ').timestamp())
+
 
         return receive_tx_time - send_tx_time
 
@@ -91,7 +115,18 @@ if __name__ == "__main__":
         sequence = data['sequence']
         duration = ah.getConsumingTimes(data)
 
-        res = [tokenName, direction, status, duration, amount, sequence, send_tx_hash, receive_tx_hash]
+        detail_status = ""
+        if status != 2:
+            detail_status = ah.getDetail(senders, send_tx_hash)
+
+        time_tmp = datetime.strptime(data["send_tx_time"],'%Y-%m-%dT%H:%M:%SZ')
+        # 返回tzinfo属性为utc时间的datetime新实例对象
+        send_tx_time_tmp = time_tmp.replace(tzinfo=timezone.utc)
+        # 将给定的utc时间转换为东八区时间
+        # 转换成string
+        send_tx_time = send_tx_time_tmp.astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')
+
+        res = [tokenName, direction, status, detail_status, duration, amount, sequence, send_tx_time, send_tx_hash, receive_tx_hash]
         if res[0] == "usdt":
             USDT.append(res)
         elif res[0] == "tele":
@@ -102,5 +137,5 @@ if __name__ == "__main__":
     [result.append(t) for t in TELE]
 
     df = pds.DataFrame(result)
-    df.columns = ["tokenName", "direction", "status", "duration", "amount", "sequence", "send_tx_hash", "receive_tx_hash"]
+    df.columns = ["tokenName", "direction", "status", "detail_status", "duration", "amount", "sequence", "send_tx_time", "send_tx_hash", "receive_tx_hash"]
     df.to_csv('result.xlsx')
