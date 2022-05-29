@@ -22,13 +22,13 @@ if __name__ == "__main__":
                         if "线程" in a:
                             strList[2] = a
                         if "requestNoce" in a:
-                            strList[3] = a
+                            strList[3] = a.split(":")[1]
                         if "returnNoce" in a:
-                            strList[4] = a
+                            strList[4] = a.split(":")[1]
                         if "address:" in a:
-                            strList[5] = a
+                            strList[5] = a.split(":")[1]
                         if "Hash:" in a:
-                            strList[6] = a
+                            strList[6] = a.split(":")[1]
                 else:
                     if "one" in r:
                         strList = [[], [], [], [], [], [], []]
@@ -39,13 +39,13 @@ if __name__ == "__main__":
                         if "线程" in a:
                             strList[2] = a
                         if "requestNoce" in a:
-                            strList[3] = a
+                            strList[3] = a.split(":")[1]
                         if "returnNoce" in a:
-                            strList[4] = a
+                            strList[4] = a.split(":")[1]
                         if "address:" in a:
-                            strList[5] = a
+                            strList[5] = a.split(":")[1]
                         if "Hash:" in a:
-                            strList[6] = a
+                            strList[6] = a.split(":")[1]
                 listS.append(strList)
 
     fHelp.write_csv("stressNonce.csv", ["prcUrl", "type", "number", "requestNoce", "returnNoce", "address", "Hash"],
